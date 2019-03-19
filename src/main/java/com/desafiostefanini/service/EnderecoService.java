@@ -1,21 +1,19 @@
 package com.desafiostefanini.service;
 
-import org.springframework.beans.BeanUtils;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-
 import com.desafiostefanini.model.Endereco;
-import com.desafiostefanini.repository.EnderecoRepository;
+import com.desafiostefanini.repository.filter.EnderecoFilter;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
-@Service
-public class EnderecoService {
+public interface EnderecoService {
 
-	@Autowired
-	private EnderecoRepository enderecoRepository;
-	
-	public Endereco atualizar(Long id, Endereco endereco) {
-		Endereco enderecoSalvo = this.enderecoRepository.findOne(id);
-		BeanUtils.copyProperties(endereco, enderecoSalvo, "id");
-		return this.enderecoRepository.save(enderecoSalvo);
-	}
+    Endereco salvar(Endereco endereco);
+
+    Page<Endereco> pesquisar(EnderecoFilter enderecoFilter, Pageable pageable);
+
+    Endereco atualizar(Long id, Endereco endereco);
+
+    Endereco buscarPorId(Long id);
+
+    void remover(Long id);
 }

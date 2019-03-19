@@ -1,9 +1,9 @@
 package com.desafiostefanini.model;
 
+import org.hibernate.validator.constraints.Email;
+
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
-
-import org.hibernate.validator.constraints.Email;
 
 @Embeddable
 public class Contato {
