@@ -1,9 +1,9 @@
 package com.desafiostefanini.repository;
 
+import com.desafiostefanini.model.Endereco;
+import com.desafiostefanini.repository.query.EnderecoRespositoryQuery;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-import com.desafiostefanini.model.Endereco;
-
-public interface EnderecoRepository extends JpaRepository<Endereco, Long> {
+public interface EnderecoRepository extends JpaRepository<Endereco, Long>, EnderecoRespositoryQuery {
 
 }

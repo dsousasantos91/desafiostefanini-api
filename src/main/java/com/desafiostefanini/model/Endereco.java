@@ -1,16 +1,8 @@
 package com.desafiostefanini.model;
 
-import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.Table;
+import com.desafiostefanini.utils.FormatarUtils;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
+import javax.persistence.*;
 
 @Entity
 @Table(name = "endereco")
@@ -32,11 +24,6 @@ public class Endereco {
 
 	@Enumerated(EnumType.STRING)
 	private TipoEndereco tipo;
-	
-	@JsonBackReference
-	@ManyToOne
-	@JoinColumn(name = "pessoa_id")
-	private Pessoa pessoa;
 
 	public Long getId() {
 		return id;
@@ -47,7 +34,7 @@ public class Endereco {
 	}
 
 	public String getCep() {
-		return cep;
+		return FormatarUtils.formatarCEP(cep);
 	}
 
 	public void setCep(String cep) {
@@ -108,14 +95,6 @@ public class Endereco {
 
 	public void setTipo(TipoEndereco tipo) {
 		this.tipo = tipo;
-	}
-	
-	public Pessoa getPessoa() {
-		return pessoa;
-	}
-
-	public void setPessoa(Pessoa pessoa) {
-		this.pessoa = pessoa;
 	}
 
 	@Override

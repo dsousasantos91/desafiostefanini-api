@@ -8,7 +8,7 @@ CREATE TABLE endereco (
 	cidade VARCHAR(50) NOT NULL,
 	uf VARCHAR(2) NOT NULL,
 	tipo VARCHAR(20) NOT NULL,
-	pessoa_id BIGINT(20) NOT NULL,
+	pessoa_id BIGINT(20),
 	FOREIGN KEY (pessoa_id) REFERENCES pessoa(id)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 

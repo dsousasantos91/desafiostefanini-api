@@ -1,9 +1,9 @@
 package com.desafiostefanini.repository.filter;
 
-import java.time.LocalDate;
-
 import org.hibernate.validator.constraints.br.CPF;
 import org.springframework.format.annotation.DateTimeFormat;
+
+import java.time.LocalDate;
 
 public class PessoaFilter {
 

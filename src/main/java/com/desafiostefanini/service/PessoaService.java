@@ -1,43 +1,25 @@
 package com.desafiostefanini.service;
 
-import java.util.List;
-
-import org.springframework.beans.BeanUtils;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.EmptyResultDataAccessException;
-import org.springframework.stereotype.Service;
-
 import com.desafiostefanini.model.Endereco;
 import com.desafiostefanini.model.Pessoa;
-import com.desafiostefanini.repository.PessoaRepository;
+import com.desafiostefanini.repository.filter.PessoaFilter;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
-@Service
-public class PessoaService {
+import java.util.List;
 
-	@Autowired
-	private PessoaRepository pessoaRepository;
+public interface PessoaService {
 
-	public Pessoa atualizar(Long pessoaId, Pessoa pessoa) {
-		Pessoa pessoaSalva = this.buscarPorId(pessoaId);
-		BeanUtils.copyProperties(pessoa, pessoaSalva, "id");
-		return this.pessoaRepository.save(pessoaSalva);
-	}
-	
-	public Pessoa buscarPorId(Long pessoaId) {
-		Pessoa pessoaSalva = pessoaRepository.findOne(pessoaId);
-		if (pessoaSalva == null) {
-			throw new EmptyResultDataAccessException(1);
-		}
-		return pessoaSalva;
-	}
+    Pessoa salvar(Pessoa pessoa);
 
-	public List<Endereco> buscarEnderecoPorPessoa(Long pessoaId) {
-		Pessoa pessoaSalva = pessoaRepository.findOne(pessoaId);
-		if (pessoaSalva == null) {
-			throw new EmptyResultDataAccessException(1);
-		}
-		return pessoaSalva.getEnderecos();
-	}
-	
-	
+    Page<Pessoa> pesquisar(PessoaFilter pessoaFilter, Pageable pageable);
+
+    Pessoa atualizar(Long id, Pessoa pessoa);
+
+    Pessoa buscarPorId(Long id);
+
+    void remover(Long id);
+
+    List<Endereco> buscarEnderecoPessoa(Long id);
+
 }

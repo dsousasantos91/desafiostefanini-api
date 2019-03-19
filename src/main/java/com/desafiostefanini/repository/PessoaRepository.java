@@ -1,9 +1,8 @@
 package com.desafiostefanini.repository;
 
-import org.springframework.data.jpa.repository.JpaRepository;
-
 import com.desafiostefanini.model.Pessoa;
-import com.desafiostefanini.repository.impl.PessoaRepositoryQuery;
+import com.desafiostefanini.repository.query.PessoaRepositoryQuery;
+import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface PessoaRepository extends JpaRepository<Pessoa, Long>, PessoaRepositoryQuery {
 	

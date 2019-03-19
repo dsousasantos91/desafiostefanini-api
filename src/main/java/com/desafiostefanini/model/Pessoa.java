@@ -1,25 +1,16 @@
 package com.desafiostefanini.model;
 
+import com.desafiostefanini.utils.FormatarUtils;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import org.hibernate.validator.constraints.br.CPF;
+
+import javax.persistence.*;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import java.time.LocalDate;
 import java.time.Period;
 import java.util.List;
-
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
-import javax.persistence.Transient;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
-
-import org.hibernate.validator.constraints.br.CPF;
-
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 @Entity
 @Table(name = "pessoa")
@@ -45,9 +36,21 @@ public class Pessoa {
 
 	private Contato contato;
 
-	@JsonManagedReference
-	@OneToMany(cascade = CascadeType.ALL, mappedBy = "pessoa", fetch = FetchType.LAZY)
+	@JsonIgnoreProperties("pessoa")
+	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+	@JoinColumn(name = "pessoa_id")
 	private List<Endereco> enderecos;
+
+	public Pessoa(){
+
+	}
+
+	public Pessoa(String nome, String cpf, LocalDate dataNascimento, Contato contato) {
+		this.nome = nome;
+		this.cpf = cpf;
+		this.dataNascimento = dataNascimento;
+		this.contato = contato;
+	}
 
 	public Long getId() {
 		return id;
@@ -66,7 +69,7 @@ public class Pessoa {
 	}
 
 	public String getCpf() {
-		return cpf;
+		return FormatarUtils.formatarCPF(cpf);
 	}
 
 	public void setCpf(String cpf) {
@@ -81,6 +84,7 @@ public class Pessoa {
 		this.dataNascimento = dataNascimento;
 	}
 
+	@JsonIgnore
 	public Integer getIdade() {
 		Period idade = Period.between(this.getDataNascimento(), LocalDate.now());
 		return idade.getYears();
@@ -94,15 +98,11 @@ public class Pessoa {
 		this.contato = contato;
 	}
 
-	@NotNull
 	public List<Endereco> getEnderecos() {
 		return enderecos;
 	}
 
 	public void setEnderecos(List<Endereco> enderecos) {
-		if (enderecos.isEmpty()) {
-			enderecos = null;
-		}
 		this.enderecos = enderecos;
 	}
 
