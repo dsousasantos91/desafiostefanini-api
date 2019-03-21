@@ -1,7 +1,6 @@
 package com.desafiostefanini.resource;
 
-import com.desafiostefanini.model.Endereco;
-import com.desafiostefanini.repository.EnderecoRepository;
+import com.desafiostefanini.domain.Endereco;
 import com.desafiostefanini.repository.filter.EnderecoFilter;
 import com.desafiostefanini.service.impl.EnderecoServiceImpl;
 import io.swagger.annotations.Api;
@@ -16,7 +15,6 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
-import java.util.List;
 
 @Api(value = "API REST - Entidade Endereco")
 @RestController

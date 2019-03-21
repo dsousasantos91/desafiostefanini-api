@@ -1,6 +1,6 @@
 package com.desafiostefanini.service;
 
-import com.desafiostefanini.model.Endereco;
+import com.desafiostefanini.domain.Endereco;
 import com.desafiostefanini.repository.filter.EnderecoFilter;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;

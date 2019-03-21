@@ -1,8 +1,10 @@
-package com.desafiostefanini.model;
+package com.desafiostefanini.domain;
 
 import com.desafiostefanini.utils.FormatarUtils;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
+import java.util.Objects;
 
 @Entity
 @Table(name = "endereco")
@@ -24,6 +26,8 @@ public class Endereco {
 
 	@Enumerated(EnumType.STRING)
 	private TipoEndereco tipo;
+
+    private Boolean ativo;
 
 	public Long getId() {
 		return id;
@@ -97,29 +101,26 @@ public class Endereco {
 		this.tipo = tipo;
 	}
 
+    public Boolean getAtivo() {
+        return ativo;
+    }
+
+    @JsonIgnore
+    @Transient
+    public boolean isAtivo(Boolean ativo) {
+        return !this.ativo;
+    }
+
+	@Override
+	public boolean equals(Object o) {
+		if (this == o) return true;
+		if (o == null || getClass() != o.getClass()) return false;
+		Endereco endereco = (Endereco) o;
+		return getId().equals(endereco.getId());
+	}
+
 	@Override
 	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + ((id == null) ? 0 : id.hashCode());
-		return result;
+		return Objects.hash(getId());
 	}
-
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		Endereco other = (Endereco) obj;
-		if (id == null) {
-			if (other.id != null)
-				return false;
-		} else if (!id.equals(other.id))
-			return false;
-		return true;
-	}
-
 }

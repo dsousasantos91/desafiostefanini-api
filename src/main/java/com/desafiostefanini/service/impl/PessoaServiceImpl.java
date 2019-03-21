@@ -1,7 +1,11 @@
 package com.desafiostefanini.service.impl;
 
-import com.desafiostefanini.model.Endereco;
-import com.desafiostefanini.model.Pessoa;
+import com.desafiostefanini.domain.Pessoa;
+import com.desafiostefanini.dto.PessoaCadastroDTO;
+import com.desafiostefanini.dto.PessoaDTO;
+import com.desafiostefanini.dto.PessoaDetelheDTO;
+import com.desafiostefanini.dto.PessoaEnderecoDTO;
+import com.desafiostefanini.mapper.PessoaMapper;
 import com.desafiostefanini.repository.PessoaRepository;
 import com.desafiostefanini.repository.filter.PessoaFilter;
 import com.desafiostefanini.service.PessoaService;
@@ -20,43 +24,54 @@ public class PessoaServiceImpl implements PessoaService {
 	@Autowired
 	private PessoaRepository pessoaRepository;
 
-	public Pessoa salvar(Pessoa pessoa) {
-		return this.pessoaRepository.save(pessoa);
+	@Autowired
+    private PessoaMapper pessoaMapper;
+
+	public PessoaCadastroDTO salvar(PessoaCadastroDTO pessoaCadastroDTO) {
+		Pessoa pessoa = pessoaMapper.dtoToDomain(pessoaCadastroDTO);
+		pessoaRepository.save(pessoa);
+		return pessoaCadastroDTO;
 	}
 
 	@Override
-	public Page<Pessoa> pesquisar(PessoaFilter pessoaFilter, Pageable pageable) {
-		return this.pessoaRepository.filtrar(pessoaFilter, pageable);
+	public Page<PessoaDTO> pesquisar(PessoaFilter pessoaFilter, Pageable pageable) {
+		Page<Pessoa> result = pessoaRepository.filtrar(pessoaFilter, pageable);
+		return result.map(pessoaMapper::domainToPessoaDto);
 	}
 
 	@Override
-	public Pessoa atualizar(Long id, Pessoa pessoa) {
-		Pessoa pessoaSalva = this.buscarPorId(id);
-		BeanUtils.copyProperties(pessoa, pessoaSalva, "id");
-		return this.pessoaRepository.save(pessoaSalva);
-	}
+	public PessoaDTO atualizar(Long id, PessoaDTO pessoaDTO) {
+        Pessoa pessoaSalva = pessoaRepository.findOne(id);
+        if (pessoaSalva == null) {
+            throw new EmptyResultDataAccessException(1);
+        }
+
+        BeanUtils.copyProperties(pessoaDTO, pessoaSalva, "id");
+        pessoaRepository.save(pessoaSalva);
+        return pessoaMapper.domainToPessoaDto(pessoaSalva);
+    }
 
 	@Override
-	public Pessoa buscarPorId(Long id) {
+	public PessoaDetelheDTO buscarPorId(Long id) {
 		Pessoa pessoaSalva = pessoaRepository.findOne(id);
 		if (pessoaSalva == null) {
 			throw new EmptyResultDataAccessException(1);
 		}
-		return pessoaSalva;
+		return pessoaMapper.domainToPessoaDetalhesDto(pessoaSalva);
 	}
 
 	@Override
 	public void remover(Long id) {
-		this.pessoaRepository.delete(id);
+		pessoaRepository.delete(id);
 	}
 
 	@Override
-	public List<Endereco> buscarEnderecoPessoa(Long id) {
+	public PessoaEnderecoDTO buscarPessoaEndereco(Long id) {
 		Pessoa pessoaSalva = pessoaRepository.findOne(id);
 		if (pessoaSalva == null) {
 			throw new EmptyResultDataAccessException(1);
 		}
-		return pessoaSalva.getEnderecos();
+		return pessoaMapper.domainToPessoaEnderecoDto(pessoaSalva);
 	}
 
 }

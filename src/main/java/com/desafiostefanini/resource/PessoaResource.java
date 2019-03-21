@@ -1,7 +1,10 @@
 package com.desafiostefanini.resource;
 
-import com.desafiostefanini.model.Endereco;
-import com.desafiostefanini.model.Pessoa;
+import com.desafiostefanini.domain.Endereco;
+import com.desafiostefanini.dto.PessoaCadastroDTO;
+import com.desafiostefanini.dto.PessoaDTO;
+import com.desafiostefanini.dto.PessoaDetelheDTO;
+import com.desafiostefanini.dto.PessoaEnderecoDTO;
 import com.desafiostefanini.repository.filter.PessoaFilter;
 import com.desafiostefanini.service.impl.PessoaServiceImpl;
 import io.swagger.annotations.Api;
@@ -25,30 +28,30 @@ public class PessoaResource {
 	@Autowired
 	private PessoaServiceImpl pessoaService;
 
-	@ApiOperation(value = "Listagem e busca de pessoas e seus endereços.")
+	@ApiOperation(value = "Listagem e busca de pessoas segundo critérios.")
 	@GetMapping
-	public Page<Pessoa> pesquisar(PessoaFilter pessoaFilter, Pageable pageable) {
+	public Page<PessoaDTO> pesquisar(PessoaFilter pessoaFilter, Pageable pageable) {
 		return this.pessoaService.pesquisar(pessoaFilter, pageable);
 	}
 
-	@ApiOperation(value = "Busca de pessoa e seus endereços pelo identificador da pessoa")
+	@ApiOperation(value = "Informações detalhadas sobre uma pessoa específica.")
 	@GetMapping(path = "/{id}", produces = "application/json")
-	public Pessoa buscarPessoaPorId(@PathVariable Long id) {
+	public PessoaDetelheDTO buscarPessoaPorId(@PathVariable Long id) {
 		return this.pessoaService.buscarPorId(id);
 	}
 
 	@ApiOperation(value = "Cadastro de pessoa e seus endereços.")
 	@PostMapping(produces = "application/json")
-	public ResponseEntity<Pessoa> salvar(@Valid @RequestBody Pessoa pessoa, HttpServletResponse response) {
-		Pessoa pessoaSalva = this.pessoaService.salvar(pessoa);
-		return ResponseEntity.status(HttpStatus.CREATED).body(pessoaSalva);
+	public ResponseEntity<PessoaCadastroDTO> salvar(@Valid @RequestBody PessoaCadastroDTO pessoaCadastroDTO, HttpServletResponse response) {
+		PessoaCadastroDTO pessoaCadastroDTOSalva = this.pessoaService.salvar(pessoaCadastroDTO);
+		return ResponseEntity.status(HttpStatus.CREATED).body(pessoaCadastroDTOSalva);
 	}
 
 	@ApiOperation(value = "Atualização de pessoa.")
 	@PutMapping(path = "/{id}", produces = "application/json")
-	public ResponseEntity<Pessoa> atualizar(@PathVariable Long id, @Valid @RequestBody Pessoa pessoa) {
-		Pessoa pessoaSalva = this.pessoaService.atualizar(id, pessoa);
-		return ResponseEntity.ok(pessoaSalva);
+	public ResponseEntity<PessoaDTO> atualizar(@PathVariable Long id, @Valid @RequestBody PessoaDTO pessoaDTO) {
+		PessoaDTO pessoaSalvaDTO = this.pessoaService.atualizar(id, pessoaDTO);
+		return ResponseEntity.ok(pessoaSalvaDTO);
 	}
 
 	@ApiOperation(value = "Remoção de pessoa e seus endereços.")
@@ -59,9 +62,9 @@ public class PessoaResource {
 	}
 
 	@ApiOperation(value = "Busca endereços da pessoa referenciada pelo identificador")
-	@GetMapping(path = "/{id}/enderecos", produces = "application/json")
-	public List<Endereco> buscarEnderecoPessoa(@PathVariable Long id) {
-		return this.pessoaService.buscarEnderecoPessoa(id);
+	@GetMapping(path = "/{id}/endereco", produces = "application/json")
+	public PessoaEnderecoDTO buscarEnderecoPessoa(@PathVariable Long id) {
+		return this.pessoaService.buscarPessoaEndereco(id);
 	}
 
 }

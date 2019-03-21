@@ -1,4 +1,4 @@
-package com.desafiostefanini.model;
+package com.desafiostefanini.domain;
 
 public enum SiglaUnidadeFederativa {
 

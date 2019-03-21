@@ -1,6 +1,6 @@
 package com.desafiostefanini.repository.filter;
 
-import com.desafiostefanini.model.SiglaUnidadeFederativa;
+import com.desafiostefanini.domain.SiglaUnidadeFederativa;
 
 public class EnderecoFilter {
 

@@ -1,6 +1,6 @@
 package com.desafiostefanini.service.impl;
 
-import com.desafiostefanini.model.Endereco;
+import com.desafiostefanini.domain.Endereco;
 import com.desafiostefanini.repository.EnderecoRepository;
 import com.desafiostefanini.repository.filter.EnderecoFilter;
 import com.desafiostefanini.service.EnderecoService;
