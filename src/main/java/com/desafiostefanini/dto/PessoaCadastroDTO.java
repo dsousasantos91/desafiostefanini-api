@@ -12,7 +12,6 @@ public class PessoaCadastroDTO {
     private String nome;
     private String cpf;
     private LocalDate dataNascimento;
-    private Integer idade;
     private Contato contato;
     private List<Endereco> enderecos;
 
@@ -38,14 +37,6 @@ public class PessoaCadastroDTO {
 
     public void setDataNascimento(LocalDate dataNascimento) {
         this.dataNascimento = dataNascimento;
-    }
-
-    public Integer getIdade() {
-        return idade;
-    }
-
-    public void setIdade(Integer idade) {
-        this.idade = idade;
     }
 
     public Contato getContato() {

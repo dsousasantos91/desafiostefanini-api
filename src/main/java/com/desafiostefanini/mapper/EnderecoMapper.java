@@ -1,6 +1,7 @@
 package com.desafiostefanini.mapper;
 
 import com.desafiostefanini.domain.Endereco;
+import com.desafiostefanini.dto.EnderecoAtualizacaoDTO;
 import com.desafiostefanini.dto.EnderecoDTO;
 import org.mapstruct.Mapper;
 import org.mapstruct.ReportingPolicy;
@@ -11,5 +12,10 @@ public interface EnderecoMapper {
     Endereco dtoToDomain(final EnderecoDTO enderecoDTO);
 
     EnderecoDTO domainToDto(final Endereco endereco);
+
+    Endereco dtoToDomain(final EnderecoAtualizacaoDTO enderecoAtualizacaoDTO);
+
+    EnderecoAtualizacaoDTO domainToAtualizacaoCadastroDto(final Endereco endereco);
+
 
 }

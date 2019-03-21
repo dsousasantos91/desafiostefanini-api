@@ -1,10 +1,7 @@
 package com.desafiostefanini.service.impl;
 
 import com.desafiostefanini.domain.Pessoa;
-import com.desafiostefanini.dto.PessoaCadastroDTO;
-import com.desafiostefanini.dto.PessoaDTO;
-import com.desafiostefanini.dto.PessoaDetelheDTO;
-import com.desafiostefanini.dto.PessoaEnderecoDTO;
+import com.desafiostefanini.dto.*;
 import com.desafiostefanini.mapper.PessoaMapper;
 import com.desafiostefanini.repository.PessoaRepository;
 import com.desafiostefanini.repository.filter.PessoaFilter;
@@ -40,15 +37,15 @@ public class PessoaServiceImpl implements PessoaService {
 	}
 
 	@Override
-	public PessoaDTO atualizar(Long id, PessoaDTO pessoaDTO) {
+	public PessoaAtualizacaoDTO atualizar(Long id, PessoaAtualizacaoDTO pessoaAtualizacaoDTO) {
         Pessoa pessoaSalva = pessoaRepository.findOne(id);
         if (pessoaSalva == null) {
             throw new EmptyResultDataAccessException(1);
         }
 
-        BeanUtils.copyProperties(pessoaDTO, pessoaSalva, "id");
+        BeanUtils.copyProperties(pessoaAtualizacaoDTO, pessoaSalva, "id");
         pessoaRepository.save(pessoaSalva);
-        return pessoaMapper.domainToPessoaDto(pessoaSalva);
+        return pessoaMapper.domainToPessoaAtualizacaoDto(pessoaSalva);
     }
 
 	@Override

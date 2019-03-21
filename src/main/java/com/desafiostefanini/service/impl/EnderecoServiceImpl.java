@@ -1,11 +1,15 @@
 package com.desafiostefanini.service.impl;
 
 import com.desafiostefanini.domain.Endereco;
+import com.desafiostefanini.dto.EnderecoAtualizacaoDTO;
+import com.desafiostefanini.dto.EnderecoDTO;
+import com.desafiostefanini.mapper.EnderecoMapper;
 import com.desafiostefanini.repository.EnderecoRepository;
 import com.desafiostefanini.repository.filter.EnderecoFilter;
 import com.desafiostefanini.service.EnderecoService;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -16,26 +20,33 @@ public class EnderecoServiceImpl implements EnderecoService {
 	@Autowired
 	private EnderecoRepository enderecoRepository;
 
+	@Autowired
+	private EnderecoMapper enderecoMapper;
+
 	@Override
-	public Endereco salvar(Endereco endereco) {
-		return this.enderecoRepository.save(endereco);
+	public Page<EnderecoDTO> pesquisar(EnderecoFilter enderecoFilter, Pageable pageable) {
+		Page<Endereco> result = enderecoRepository.filtrar(enderecoFilter, pageable);
+		return result.map(enderecoMapper::domainToDto);
 	}
 
 	@Override
-	public Page<Endereco> pesquisar(EnderecoFilter enderecoFilter, Pageable pageable) {
-		return this.enderecoRepository.filtrar(enderecoFilter, pageable);
-	}
-
-	@Override
-	public Endereco atualizar(Long id, Endereco endereco) {
+	public EnderecoAtualizacaoDTO atualizar(Long id, EnderecoAtualizacaoDTO enderecoAtualizacaoDTO) {
 		Endereco enderecoSalvo = this.enderecoRepository.findOne(id);
-		BeanUtils.copyProperties(endereco, enderecoSalvo, "id");
-		return this.enderecoRepository.save(enderecoSalvo);
+		if (enderecoSalvo == null) {
+			throw new EmptyResultDataAccessException(1);
+		}
+		BeanUtils.copyProperties(enderecoAtualizacaoDTO, enderecoSalvo, "id");
+		enderecoRepository.save(enderecoSalvo);
+		return enderecoMapper.domainToAtualizacaoCadastroDto(enderecoSalvo);
 	}
 
 	@Override
-	public Endereco buscarPorId(Long id) {
-		return null;
+	public EnderecoDTO buscarPorId(Long id) {
+		Endereco enderecoSalvo = this.enderecoRepository.findOne(id);
+		if (enderecoSalvo == null) {
+			throw new EmptyResultDataAccessException(1);
+		}
+		return enderecoMapper.domainToDto(enderecoSalvo);
 	}
 
 	@Override

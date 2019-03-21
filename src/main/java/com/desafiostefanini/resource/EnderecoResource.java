@@ -1,6 +1,7 @@
 package com.desafiostefanini.resource;
 
-import com.desafiostefanini.domain.Endereco;
+import com.desafiostefanini.dto.EnderecoAtualizacaoDTO;
+import com.desafiostefanini.dto.EnderecoDTO;
 import com.desafiostefanini.repository.filter.EnderecoFilter;
 import com.desafiostefanini.service.impl.EnderecoServiceImpl;
 import io.swagger.annotations.Api;
@@ -24,38 +25,31 @@ public class EnderecoResource {
 	@Autowired
 	private EnderecoServiceImpl enderecoService;
 	
-	@ApiOperation(value = "Listagem e busca de endereços")
+	@ApiOperation(value = "Listagem e busca de endereços segundo critérios.")
 	@ApiImplicitParam
 	@GetMapping(produces = "application/json")
-	public Page<Endereco> pesquisar(EnderecoFilter enderecoFilter, Pageable pageable) {
-		return this.enderecoService.pesquisar(enderecoFilter, pageable);
+	public Page<EnderecoDTO> pesquisar(EnderecoFilter enderecoFilter, Pageable pageable) {
+		return enderecoService.pesquisar(enderecoFilter, pageable);
 	}
 
-	@ApiOperation(value = "Busca de endereços pelo identificador")
+	@ApiOperation(value = "Busca de endereço pelo identificador")
 	@GetMapping(path = "/{id}", produces = "application/json")
-	public Endereco buscarPorId(@PathVariable Long id) {
-		return this.enderecoService.buscarPorId(id);
-	}
-
-	@ApiOperation(value = "Cadastro de endereço")
-	@PostMapping
-	public ResponseEntity<Endereco> cadastrar(@Valid @RequestBody Endereco endereco, HttpServletResponse response) {
-		Endereco enderecoSalvo = this.enderecoService.salvar(endereco);
-		return ResponseEntity.status(HttpStatus.CREATED).body(enderecoSalvo);
+	public EnderecoDTO buscarPorId(@PathVariable Long id) {
+		return enderecoService.buscarPorId(id);
 	}
 
 	@ApiOperation(value = "Atualização de endereço")
 	@PutMapping(path = "/{id}", produces = "application/json")
-	public ResponseEntity<Endereco> atualizar(@PathVariable Long id, @Valid @RequestBody Endereco endereco) {
-		Endereco enderecoSalvo = this.enderecoService.atualizar(id, endereco);
-		return ResponseEntity.ok(enderecoSalvo);
+	public ResponseEntity<EnderecoAtualizacaoDTO> atualizar(@PathVariable Long id, @Valid @RequestBody EnderecoAtualizacaoDTO enderecoAtualizacaoDTO) {
+		EnderecoAtualizacaoDTO enderecoAtualizacaoDTOSalvo = enderecoService.atualizar(id, enderecoAtualizacaoDTO);
+		return ResponseEntity.ok(enderecoAtualizacaoDTOSalvo);
 	}
 
 	@ApiOperation(value = "Remoção de endereço")
 	@DeleteMapping("/{id}")
 	@ResponseStatus(HttpStatus.NO_CONTENT)
 	public void remover(@PathVariable Long id) {
-		this.enderecoService.remover(id);
+		enderecoService.remover(id);
 	}
 
 }

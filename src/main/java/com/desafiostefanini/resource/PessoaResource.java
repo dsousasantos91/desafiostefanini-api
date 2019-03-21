@@ -1,10 +1,7 @@
 package com.desafiostefanini.resource;
 
 import com.desafiostefanini.domain.Endereco;
-import com.desafiostefanini.dto.PessoaCadastroDTO;
-import com.desafiostefanini.dto.PessoaDTO;
-import com.desafiostefanini.dto.PessoaDetelheDTO;
-import com.desafiostefanini.dto.PessoaEnderecoDTO;
+import com.desafiostefanini.dto.*;
 import com.desafiostefanini.repository.filter.PessoaFilter;
 import com.desafiostefanini.service.impl.PessoaServiceImpl;
 import io.swagger.annotations.Api;
@@ -49,9 +46,9 @@ public class PessoaResource {
 
 	@ApiOperation(value = "Atualização de pessoa.")
 	@PutMapping(path = "/{id}", produces = "application/json")
-	public ResponseEntity<PessoaDTO> atualizar(@PathVariable Long id, @Valid @RequestBody PessoaDTO pessoaDTO) {
-		PessoaDTO pessoaSalvaDTO = this.pessoaService.atualizar(id, pessoaDTO);
-		return ResponseEntity.ok(pessoaSalvaDTO);
+	public ResponseEntity<PessoaAtualizacaoDTO> atualizar(@PathVariable Long id, @Valid @RequestBody PessoaAtualizacaoDTO pessoaAtualizacaoDTO) {
+		PessoaAtualizacaoDTO pessoaAtualizacaoDTOSalva = this.pessoaService.atualizar(id, pessoaAtualizacaoDTO);
+		return ResponseEntity.ok(pessoaAtualizacaoDTOSalva);
 	}
 
 	@ApiOperation(value = "Remoção de pessoa e seus endereços.")
