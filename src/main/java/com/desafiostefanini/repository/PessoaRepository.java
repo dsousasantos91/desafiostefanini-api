@@ -1,6 +1,6 @@
 package com.desafiostefanini.repository;
 
-import com.desafiostefanini.model.Pessoa;
+import com.desafiostefanini.domain.Pessoa;
 import com.desafiostefanini.repository.query.PessoaRepositoryQuery;
 import org.springframework.data.jpa.repository.JpaRepository;
 

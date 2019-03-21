@@ -1,6 +1,6 @@
 package com.desafiostefanini.repository.impl;
 
-import com.desafiostefanini.model.Endereco;
+import com.desafiostefanini.domain.Endereco;
 import com.desafiostefanini.repository.filter.EnderecoFilter;
 import com.desafiostefanini.repository.query.EnderecoRespositoryQuery;
 import org.apache.commons.lang3.StringUtils;

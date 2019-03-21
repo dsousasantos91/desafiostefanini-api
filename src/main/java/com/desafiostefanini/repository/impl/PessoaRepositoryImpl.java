@@ -1,6 +1,6 @@
 package com.desafiostefanini.repository.impl;
 
-import com.desafiostefanini.model.Pessoa;
+import com.desafiostefanini.domain.Pessoa;
 import com.desafiostefanini.repository.filter.PessoaFilter;
 import com.desafiostefanini.repository.query.PessoaRepositoryQuery;
 import org.springframework.data.domain.Page;
@@ -88,10 +88,5 @@ public class PessoaRepositoryImpl implements PessoaRepositoryQuery {
 		criteria.select(builder.count(root)); 
 		return manager.createQuery(criteria).getSingleResult();
 	}
-	
-//	private String removerAcentos(String str) {
-//	    str = Normalizer.normalize(str, Normalizer.Form.NFD).replaceAll("[^\\p{ASCII}]", "");
-//	    return str;
-//	}
 
 }

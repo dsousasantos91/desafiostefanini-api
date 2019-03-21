@@ -1,4 +1,4 @@
-package com.desafiostefanini.model;
+package com.desafiostefanini.domain;
 
 import org.hibernate.validator.constraints.Email;
 

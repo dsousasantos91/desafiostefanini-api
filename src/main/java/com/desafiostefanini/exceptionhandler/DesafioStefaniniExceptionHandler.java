@@ -23,7 +23,7 @@ import java.util.List;
 import java.util.Locale;
 
 @ControllerAdvice
-public class AlgaMoneyExceptionHandler extends ResponseEntityExceptionHandler{
+public class DesafioStefaniniExceptionHandler extends ResponseEntityExceptionHandler{
 
 	private Locale ptBR = new Locale("pt", "BR"); // Instancia de Locale devido sistema esta em inglês
 	

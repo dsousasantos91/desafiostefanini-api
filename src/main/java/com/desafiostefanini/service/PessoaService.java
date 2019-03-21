@@ -1,7 +1,10 @@
 package com.desafiostefanini.service;
 
-import com.desafiostefanini.model.Endereco;
-import com.desafiostefanini.model.Pessoa;
+import com.desafiostefanini.domain.Endereco;
+import com.desafiostefanini.dto.PessoaCadastroDTO;
+import com.desafiostefanini.dto.PessoaDTO;
+import com.desafiostefanini.dto.PessoaDetelheDTO;
+import com.desafiostefanini.dto.PessoaEnderecoDTO;
 import com.desafiostefanini.repository.filter.PessoaFilter;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -10,16 +13,16 @@ import java.util.List;
 
 public interface PessoaService {
 
-    Pessoa salvar(Pessoa pessoa);
+    PessoaCadastroDTO salvar(PessoaCadastroDTO pessoaCadastroDTO);
 
-    Page<Pessoa> pesquisar(PessoaFilter pessoaFilter, Pageable pageable);
+    Page<PessoaDTO> pesquisar(PessoaFilter pessoaFilter, Pageable pageable);
 
-    Pessoa atualizar(Long id, Pessoa pessoa);
+    PessoaDTO atualizar(Long id, PessoaDTO pessoaDTO);
 
-    Pessoa buscarPorId(Long id);
+    PessoaDetelheDTO buscarPorId(Long id);
 
     void remover(Long id);
 
-    List<Endereco> buscarEnderecoPessoa(Long id);
+    PessoaEnderecoDTO buscarPessoaEndereco(Long id);
 
 }
