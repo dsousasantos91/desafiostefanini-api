@@ -2,17 +2,31 @@ package com.desafiostefanini.dto;
 
 import com.desafiostefanini.domain.Contato;
 import com.desafiostefanini.domain.Endereco;
+import org.hibernate.validator.constraints.br.CPF;
 
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Size;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Objects;
 
 public class PessoaCadastroDTO {
 
+    @NotNull
+    @Size(min = 3, max = 80)
     private String nome;
+
+    @NotNull
+    @CPF
+    @Pattern(regexp = "[0-9]{11}")
     private String cpf;
+
+    @NotNull
     private LocalDate dataNascimento;
+
     private Contato contato;
+
     private List<Endereco> enderecos;
 
     public String getNome() {

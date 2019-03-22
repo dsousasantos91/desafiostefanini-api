@@ -1,13 +1,13 @@
 package com.desafiostefanini.domain;
 
 import com.desafiostefanini.utils.FormatarUtils;
-import com.desafiostefanini.utils.RemoverAcentos;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import org.hibernate.validator.constraints.br.CPF;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 import java.time.LocalDate;
 import java.time.Period;
@@ -22,16 +22,18 @@ public class Pessoa {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
-	@NotNull
-	@Size(min = 3, max = 50)
-	private String nome;
+    @NotNull
+    @Size(min = 3, max = 80)
+    private String nome;
 
-	@NotNull
-	@CPF
-	private String cpf;
+    @NotNull
+    @CPF
+    @Pattern(regexp = "[0-9]{11}")
+    private String cpf;
 
+    @NotNull
 	@Column(name = "data_nascimento")
-	private LocalDate dataNascimento;
+    private LocalDate dataNascimento;
 
 	@Transient
 	private Integer idade;
@@ -56,7 +58,7 @@ public class Pessoa {
 	}
 
 	public void setNome(String nome) {
-		this.nome = RemoverAcentos.remover(nome);
+		this.nome = FormatarUtils.removerAcentos(nome);
 	}
 
 	public String getCpf() {
@@ -64,7 +66,8 @@ public class Pessoa {
 	}
 
 	public void setCpf(String cpf) {
-		this.cpf = cpf;
+		this.cpf = cpf.replace(".", "")
+				.replace("-", "");
 	}
 
 	public LocalDate getDataNascimento() {

@@ -53,4 +53,13 @@ public class EnderecoServiceImpl implements EnderecoService {
 	public void remover(Long id) {
 
 	}
+
+	@Override
+	public void atualizarPropriedadeAtivo(Long id, Boolean ativo) {
+		EnderecoDTO enderecoDTOSalvo = buscarPorId(id);
+		enderecoDTOSalvo.setAtivo(ativo);
+
+		Endereco endereco = enderecoMapper.dtoToDomain(enderecoDTOSalvo);
+		enderecoRepository.save(endereco);
+	}
 }
