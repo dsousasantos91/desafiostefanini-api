@@ -4,6 +4,7 @@ import com.desafiostefanini.domain.Contato;
 import com.desafiostefanini.domain.Endereco;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -66,7 +67,13 @@ public class PessoaDetelheDTO {
     }
 
     public List<Endereco> getEnderecos() {
-        return enderecos;
+        List<Endereco> ativos = new ArrayList<>();
+        for (Endereco endereco: enderecos) {
+            if (!endereco.isInativo()) {
+                ativos.add(endereco);
+            }
+        }
+        return ativos;
     }
 
     public void setEnderecos(List<Endereco> enderecos) {

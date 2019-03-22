@@ -1,16 +1,37 @@
 package com.desafiostefanini.dto;
 
+import javax.validation.constraints.Max;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import java.util.Objects;
 
 public class EnderecoDTO {
 
     private Long id;
+
+    @Size(max = 8)
     private String cep;
+
+    @NotNull
+    @Size(max = 100)
     private String logradouro;
+
+    @NotNull
+    @Max(999)
     private Integer numero;
+
     private String complemento;
+
+    @NotNull
+    @Size(max = 50)
     private String bairro;
+
+    @NotNull
+    @Size(max = 50)
     private String cidade;
+
+    @NotNull
+    private Boolean ativo;
 
     public Long getId() {
         return id;
@@ -66,6 +87,14 @@ public class EnderecoDTO {
 
     public void setCidade(String cidade) {
         this.cidade = cidade;
+    }
+
+    public Boolean getAtivo() {
+        return ativo;
+    }
+
+    public void setAtivo(Boolean ativo) {
+        this.ativo = ativo;
     }
 
     @Override

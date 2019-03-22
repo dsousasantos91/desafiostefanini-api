@@ -3,6 +3,7 @@ package com.desafiostefanini.repository.impl;
 import com.desafiostefanini.domain.Endereco;
 import com.desafiostefanini.repository.filter.EnderecoFilter;
 import com.desafiostefanini.repository.query.EnderecoRespositoryQuery;
+import com.desafiostefanini.utils.FormatarUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
@@ -52,7 +53,7 @@ public class EnderecoRepositoryImpl implements EnderecoRespositoryQuery {
         if (!StringUtils.isEmpty(enderecoFilter.getCidade())) {
             predicates.add(builder.like(
                     builder.lower(root.get("cidade")),"%" +
-                            enderecoFilter.getCidade().toLowerCase() + "%"));
+                            FormatarUtils.removerAcentos(enderecoFilter.getCidade()).toLowerCase() + "%"));
         }
 
         if (enderecoFilter.getUf() != null) {
@@ -85,10 +86,7 @@ public class EnderecoRepositoryImpl implements EnderecoRespositoryQuery {
         return manager.createQuery(criteria).getSingleResult();
     }
 
-//	private String removerAcentos(String str) {
-//	    str = Normalizer.normalize(str, Normalizer.Form.NFD).replaceAll("[^\\p{ASCII}]", "");
-//	    return str;
-//	}
+
 }
 
 

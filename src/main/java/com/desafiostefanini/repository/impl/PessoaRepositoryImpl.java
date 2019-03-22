@@ -3,6 +3,7 @@ package com.desafiostefanini.repository.impl;
 import com.desafiostefanini.domain.Pessoa;
 import com.desafiostefanini.repository.filter.PessoaFilter;
 import com.desafiostefanini.repository.query.PessoaRepositoryQuery;
+import com.desafiostefanini.utils.FormatarUtils;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
@@ -39,30 +40,30 @@ public class PessoaRepositoryImpl implements PessoaRepositoryQuery {
 		return new PageImpl<>(query.getResultList(), pageable, total(pessoaFilter));
 	}
 
-	private Predicate[] criarRestricoes(PessoaFilter PessoaFilter, CriteriaBuilder builder,
+	private Predicate[] criarRestricoes(PessoaFilter pessoaFilter, CriteriaBuilder builder,
 			Root<Pessoa> root) {
 		List<Predicate> predicates = new ArrayList<>();
 		
-		if (!StringUtils.isEmpty(PessoaFilter.getNome())) {
+		if (!StringUtils.isEmpty(pessoaFilter.getNome())) {
 			predicates.add(builder.like(
-					builder.lower(root.get("nome")),"%" + 
-							PessoaFilter.getNome().toLowerCase() + "%"));
+					builder.lower(root.get("nome")),"%" +
+							FormatarUtils.removerAcentos(pessoaFilter.getNome()).toLowerCase() + "%"));
 		}
 		
-		if (!StringUtils.isEmpty(PessoaFilter.getCpf())) {
+		if (!StringUtils.isEmpty(pessoaFilter.getCpf())) {
 			predicates.add(builder.like(
-					builder.lower(root.get("cpf")),"%" + 
-							PessoaFilter.getCpf().toLowerCase() + "%"));
+					builder.lower(root.get("cpf")),"%" +
+							pessoaFilter.getCpf().toLowerCase() + "%"));
 		}
 		
-		if (PessoaFilter.getDataNascimentoDe() != null) {
+		if (pessoaFilter.getDataNascimentoDe() != null) {
 			predicates.add(
-					builder.greaterThanOrEqualTo(root.get("dataNascimento"), PessoaFilter.getDataNascimentoDe()));
+					builder.greaterThanOrEqualTo(root.get("dataNascimento"), pessoaFilter.getDataNascimentoDe()));
 		}
 		
-		if (PessoaFilter.getDataNascimentoAte() != null) {
+		if (pessoaFilter.getDataNascimentoAte() != null) {
 			predicates.add(
-					builder.lessThanOrEqualTo(root.get("dataNascimento"), PessoaFilter.getDataNascimentoAte()));
+					builder.lessThanOrEqualTo(root.get("dataNascimento"), pessoaFilter.getDataNascimentoAte()));
 		}
 		
 		return predicates.toArray(new Predicate[predicates.size()]);

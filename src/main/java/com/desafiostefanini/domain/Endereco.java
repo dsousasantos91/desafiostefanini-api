@@ -4,6 +4,9 @@ import com.desafiostefanini.utils.FormatarUtils;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import java.util.Objects;
 
 @Entity
@@ -14,20 +17,36 @@ public class Endereco {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
+    @Size(max = 8)
 	private String cep;
-	private String logradouro;
-	private Integer numero;
-	private String complemento;
-	private String bairro;
-	private String cidade;
-	
+
+    @NotNull
+    @Size(max = 100)
+    private String logradouro;
+
+    @NotNull
+    @Max(999)
+    private Integer numero;
+
+    private String complemento;
+
+    @NotNull
+    @Size(max = 50)
+    private String bairro;
+
+    @NotNull
+    @Size(max = 50)
+    private String cidade;
+
+    @NotNull
+    private Boolean ativo;
+
+	@NotNull
 	@Enumerated(EnumType.STRING)
 	private SiglaUnidadeFederativa uf;
 
 	@Enumerated(EnumType.STRING)
 	private TipoEndereco tipo;
-
-    private Boolean ativo;
 
 	public Long getId() {
 		return id;
@@ -42,7 +61,8 @@ public class Endereco {
 	}
 
 	public void setCep(String cep) {
-		this.cep = cep;
+		this.cep = cep.replace(".", "")
+				.replace("-", "");
 	}
 
 	public String getLogradouro() {
@@ -82,7 +102,7 @@ public class Endereco {
 	}
 
 	public void setCidade(String cidade) {
-		this.cidade = cidade;
+		this.cidade = FormatarUtils.removerAcentos(cidade);
 	}
 
 	public SiglaUnidadeFederativa getUf() {
@@ -101,13 +121,17 @@ public class Endereco {
 		this.tipo = tipo;
 	}
 
-    public Boolean getAtivo() {
-        return ativo;
-    }
+	public Boolean getAtivo() {
+		return ativo;
+	}
+
+	public Boolean setAtivo(Boolean ativo) {
+		return this.ativo = ativo;
+	}
 
     @JsonIgnore
     @Transient
-    public boolean isAtivo(Boolean ativo) {
+    public boolean isInativo() {
         return !this.ativo;
     }
 

@@ -15,4 +15,6 @@ public interface EnderecoService {
     EnderecoDTO buscarPorId(Long id);
 
     void remover(Long id);
+
+    void atualizarPropriedadeAtivo(Long id, Boolean ativo);
 }

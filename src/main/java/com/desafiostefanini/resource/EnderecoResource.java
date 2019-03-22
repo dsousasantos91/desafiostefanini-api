@@ -52,4 +52,10 @@ public class EnderecoResource {
 		enderecoService.remover(id);
 	}
 
+	@ApiOperation(value = "Ativar ou inativar endereço")
+	@PutMapping("/{id}/ativo")
+	@ResponseStatus(HttpStatus.NO_CONTENT)
+	public void atualizarPropriedadeAtiva(@PathVariable Long id, @RequestBody Boolean ativo) {
+		enderecoService.atualizarPropriedadeAtivo(id, ativo);
+	}
 }
