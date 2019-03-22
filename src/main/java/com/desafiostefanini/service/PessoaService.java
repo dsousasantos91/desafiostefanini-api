@@ -1,5 +1,6 @@
 package com.desafiostefanini.service;
 
+import com.desafiostefanini.domain.Pessoa;
 import com.desafiostefanini.dto.*;
 import com.desafiostefanini.repository.filter.PessoaFilter;
 import org.springframework.data.domain.Page;
@@ -7,13 +8,13 @@ import org.springframework.data.domain.Pageable;
 
 public interface PessoaService {
 
-    PessoaCadastroDTO salvar(PessoaCadastroDTO pessoaCadastroDTO);
+    Pessoa salvar(Pessoa pessoa);
 
     Page<PessoaDTO> pesquisar(PessoaFilter pessoaFilter, Pageable pageable);
 
-    PessoaAtualizacaoDTO atualizar(Long id, PessoaAtualizacaoDTO pessoaAtualizacaoDTO);
+    PessoaDTO atualizar(Long id, PessoaDTO pessoaDTO);
 
-    PessoaDetelheDTO buscarPorId(Long id);
+    PessoaDetalheDTO buscarPorId(Long id);
 
     void remover(Long id);
 

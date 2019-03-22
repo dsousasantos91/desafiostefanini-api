@@ -1,5 +1,11 @@
 package com.desafiostefanini.dto;
 
+import com.desafiostefanini.domain.SiglaUnidadeFederativa;
+import com.desafiostefanini.domain.TipoEndereco;
+import com.desafiostefanini.utils.FormatarUtils;
+
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -33,6 +39,13 @@ public class EnderecoDTO {
     @NotNull
     private Boolean ativo;
 
+    @NotNull
+    @Enumerated(EnumType.STRING)
+    private SiglaUnidadeFederativa uf;
+
+    @Enumerated(EnumType.STRING)
+    private TipoEndereco tipo;
+
     public Long getId() {
         return id;
     }
@@ -42,11 +55,11 @@ public class EnderecoDTO {
     }
 
     public String getCep() {
-        return cep;
+        return FormatarUtils.formatarCEP(cep);
     }
 
     public void setCep(String cep) {
-        this.cep = cep;
+        this.cep = cep.replace(".", "").replace("-", "");
     }
 
     public String getLogradouro() {
@@ -95,6 +108,22 @@ public class EnderecoDTO {
 
     public void setAtivo(Boolean ativo) {
         this.ativo = ativo;
+    }
+
+    public SiglaUnidadeFederativa getUf() {
+        return uf;
+    }
+
+    public void setUf(SiglaUnidadeFederativa uf) {
+        this.uf = uf;
+    }
+
+    public TipoEndereco getTipo() {
+        return tipo;
+    }
+
+    public void setTipo(TipoEndereco tipo) {
+        this.tipo = tipo;
     }
 
     @Override

@@ -3,7 +3,6 @@ package com.desafiostefanini.dto;
 import org.hibernate.validator.constraints.br.CPF;
 
 import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 import java.io.Serializable;
 import java.time.LocalDate;
@@ -21,7 +20,6 @@ public class PessoaDTO implements Serializable {
 
     @NotNull
     @CPF
-    @Pattern(regexp = "[0-9]{11}")
     private String cpf;
 
     @NotNull

@@ -1,6 +1,5 @@
 package com.desafiostefanini.service;
 
-import com.desafiostefanini.dto.EnderecoAtualizacaoDTO;
 import com.desafiostefanini.dto.EnderecoDTO;
 import com.desafiostefanini.repository.filter.EnderecoFilter;
 import org.springframework.data.domain.Page;
@@ -10,7 +9,7 @@ public interface EnderecoService {
 
     Page<EnderecoDTO> pesquisar(EnderecoFilter enderecoFilter, Pageable pageable);
 
-    EnderecoAtualizacaoDTO atualizar(Long id, EnderecoAtualizacaoDTO enderecoAtualizacaoDTO);
+    EnderecoDTO atualizar(Long id, EnderecoDTO enderecoDTO);
 
     EnderecoDTO buscarPorId(Long id);
 

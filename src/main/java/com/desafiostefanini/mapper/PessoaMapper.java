@@ -12,17 +12,9 @@ public interface PessoaMapper {
 
     PessoaDTO domainToPessoaDto(final Pessoa pessoa);
 
-    Pessoa dtoToDomain(final PessoaCadastroDTO pessoaCadastroDTO);
+    Pessoa dtoToDomain(final PessoaDetalheDTO pessoaDetalheDTO);
 
-    PessoaCadastroDTO domainToPessoaCadastroDto(final Pessoa pessoa);
-
-    Pessoa dtoToDomain(final PessoaAtualizacaoDTO pessoaAtualizacaoDTO);
-
-    PessoaAtualizacaoDTO domainToPessoaAtualizacaoDto(final Pessoa pessoa);
-
-    Pessoa dtoToDomain(final PessoaDetelheDTO pessoaDetelheDTO);
-
-    PessoaDetelheDTO domainToPessoaDetalhesDto(final Pessoa pessoa);
+    PessoaDetalheDTO domainToPessoaDetalhesDto(final Pessoa pessoa);
 
     Pessoa dtoToDomain(final PessoaEnderecoDTO pessoaEnderecoDTO);
 

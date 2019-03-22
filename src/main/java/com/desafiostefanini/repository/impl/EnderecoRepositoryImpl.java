@@ -59,9 +59,8 @@ public class EnderecoRepositoryImpl implements EnderecoRespositoryQuery {
         }
 
         if (enderecoFilter.getUf() != null) {
-            predicates.add(builder.like(
-                    builder.lower(root.get("uf")),"%" +
-                            enderecoFilter.getUf() + "%"));
+            predicates.add(builder.equal(
+                    root.get("uf"), enderecoFilter.getUf()));
         }
 
         return predicates.toArray(new Predicate[predicates.size()]);

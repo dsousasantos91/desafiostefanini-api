@@ -1,6 +1,5 @@
 package com.desafiostefanini.resource;
 
-import com.desafiostefanini.dto.EnderecoAtualizacaoDTO;
 import com.desafiostefanini.dto.EnderecoDTO;
 import com.desafiostefanini.repository.filter.EnderecoFilter;
 import com.desafiostefanini.service.impl.EnderecoServiceImpl;
@@ -14,7 +13,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 
 @Api(value = "API REST - Entidade Endereco")
@@ -28,20 +26,22 @@ public class EnderecoResource {
 	@ApiOperation(value = "Listagem e busca de endereços segundo critérios.")
 	@ApiImplicitParam
 	@GetMapping(produces = "application/json")
-	public Page<EnderecoDTO> pesquisar(EnderecoFilter enderecoFilter, Pageable pageable) {
-		return enderecoService.pesquisar(enderecoFilter, pageable);
+	public ResponseEntity<Page<EnderecoDTO>> pesquisar(EnderecoFilter enderecoFilter, Pageable pageable) {
+		Page<EnderecoDTO> page = enderecoService.pesquisar(enderecoFilter, pageable);
+		return ResponseEntity.ok(page);
 	}
 
 	@ApiOperation(value = "Busca de endereço pelo identificador")
 	@GetMapping(path = "/{id}", produces = "application/json")
-	public EnderecoDTO buscarPorId(@PathVariable Long id) {
-		return enderecoService.buscarPorId(id);
+	public ResponseEntity<EnderecoDTO> buscarPorId(@PathVariable Long id) {
+		EnderecoDTO enderecoDTO = enderecoService.buscarPorId(id);
+		return ResponseEntity.ok(enderecoDTO);
 	}
 
 	@ApiOperation(value = "Atualização de endereço")
 	@PutMapping(path = "/{id}", produces = "application/json")
-	public ResponseEntity<EnderecoAtualizacaoDTO> atualizar(@PathVariable Long id, @Valid @RequestBody EnderecoAtualizacaoDTO enderecoAtualizacaoDTO) {
-		EnderecoAtualizacaoDTO enderecoAtualizacaoDTOSalvo = enderecoService.atualizar(id, enderecoAtualizacaoDTO);
+	public ResponseEntity<EnderecoDTO> atualizar(@PathVariable Long id, @Valid @RequestBody EnderecoDTO enderecoDTO) {
+		EnderecoDTO enderecoAtualizacaoDTOSalvo = enderecoService.atualizar(id, enderecoDTO);
 		return ResponseEntity.ok(enderecoAtualizacaoDTOSalvo);
 	}
 
