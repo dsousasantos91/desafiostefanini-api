@@ -47,7 +47,9 @@ public class EnderecoRepositoryImpl implements EnderecoRespositoryQuery {
         if (!StringUtils.isEmpty(enderecoFilter.getCep())) {
             predicates.add(builder.like(
                     builder.lower(root.get("cep")),"%" +
-                            enderecoFilter.getCep().toLowerCase() + "%"));
+                            enderecoFilter.getCep().toLowerCase()
+                                    .replace(".", "")
+                                    .replace("-", "") + "%"));
         }
 
         if (!StringUtils.isEmpty(enderecoFilter.getCidade())) {
@@ -59,7 +61,7 @@ public class EnderecoRepositoryImpl implements EnderecoRespositoryQuery {
         if (enderecoFilter.getUf() != null) {
             predicates.add(builder.like(
                     builder.lower(root.get("uf")),"%" +
-                            enderecoFilter.getCidade().toUpperCase() + "%"));
+                            enderecoFilter.getUf() + "%"));
         }
 
         return predicates.toArray(new Predicate[predicates.size()]);

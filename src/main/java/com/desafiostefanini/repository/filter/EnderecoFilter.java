@@ -2,10 +2,15 @@ package com.desafiostefanini.repository.filter;
 
 import com.desafiostefanini.domain.SiglaUnidadeFederativa;
 
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+
 public class EnderecoFilter {
 
     private String cep;
     private String cidade;
+
+    @Enumerated(EnumType.STRING)
     private SiglaUnidadeFederativa uf;
 
     public String getCep() {
