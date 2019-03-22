@@ -1,15 +1,15 @@
 CREATE TABLE endereco (
 	id BIGINT(20) PRIMARY KEY AUTO_INCREMENT,
 	cep VARCHAR(8),
-	logradouro VARCHAR(100) NOT NULL,
-	numero INT NOT NULL ,
+	logradouro VARCHAR(100),
+	numero INT,
 	complemento VARCHAR(100),
-	bairro VARCHAR(50) NOT NULL,
-	cidade VARCHAR(50) NOT NULL,
-	uf VARCHAR(2) NOT NULL,
+	bairro VARCHAR(50),
+	cidade VARCHAR(50),
+	uf VARCHAR(2),
 	tipo VARCHAR(20),
-	ativo BOOLEAN NOT NULL,
-	pessoa_id BIGINT(20) NOT  NULL,
+	ativo BOOLEAN,
+	pessoa_id BIGINT(20),
 	FOREIGN KEY (pessoa_id) REFERENCES pessoa(id)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 

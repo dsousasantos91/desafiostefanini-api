@@ -13,8 +13,6 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-
 @Service
 public class PessoaServiceImpl implements PessoaService {
 
@@ -24,10 +22,8 @@ public class PessoaServiceImpl implements PessoaService {
 	@Autowired
     private PessoaMapper pessoaMapper;
 
-	public PessoaCadastroDTO salvar(PessoaCadastroDTO pessoaCadastroDTO) {
-		Pessoa pessoa = pessoaMapper.dtoToDomain(pessoaCadastroDTO);
-		pessoaRepository.save(pessoa);
-		return pessoaCadastroDTO;
+	public Pessoa salvar(Pessoa pessoa) {
+		return pessoaRepository.save(pessoa);
 	}
 
 	@Override
@@ -37,19 +33,19 @@ public class PessoaServiceImpl implements PessoaService {
 	}
 
 	@Override
-	public PessoaAtualizacaoDTO atualizar(Long id, PessoaAtualizacaoDTO pessoaAtualizacaoDTO) {
+	public PessoaDTO atualizar(Long id, PessoaDTO pessoaDTO) {
         Pessoa pessoaSalva = pessoaRepository.findOne(id);
         if (pessoaSalva == null) {
             throw new EmptyResultDataAccessException(1);
         }
 
-        BeanUtils.copyProperties(pessoaAtualizacaoDTO, pessoaSalva, "id");
+        BeanUtils.copyProperties(pessoaDTO, pessoaSalva, "id");
         pessoaRepository.save(pessoaSalva);
-        return pessoaMapper.domainToPessoaAtualizacaoDto(pessoaSalva);
+        return pessoaMapper.domainToPessoaDto(pessoaSalva);
     }
 
 	@Override
-	public PessoaDetelheDTO buscarPorId(Long id) {
+	public PessoaDetalheDTO buscarPorId(Long id) {
 		Pessoa pessoaSalva = pessoaRepository.findOne(id);
 		if (pessoaSalva == null) {
 			throw new EmptyResultDataAccessException(1);

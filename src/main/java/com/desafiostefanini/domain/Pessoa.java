@@ -28,7 +28,6 @@ public class Pessoa {
 
     @NotNull
     @CPF
-    @Pattern(regexp = "[0-9]{11}")
     private String cpf;
 
     @NotNull
@@ -40,6 +39,7 @@ public class Pessoa {
 
 	private Contato contato;
 
+	@NotNull
 	@JsonIgnoreProperties("pessoa")
 	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	@JoinColumn(name = "pessoa_id")

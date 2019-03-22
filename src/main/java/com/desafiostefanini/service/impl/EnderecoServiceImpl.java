@@ -1,7 +1,6 @@
 package com.desafiostefanini.service.impl;
 
 import com.desafiostefanini.domain.Endereco;
-import com.desafiostefanini.dto.EnderecoAtualizacaoDTO;
 import com.desafiostefanini.dto.EnderecoDTO;
 import com.desafiostefanini.mapper.EnderecoMapper;
 import com.desafiostefanini.repository.EnderecoRepository;
@@ -30,14 +29,14 @@ public class EnderecoServiceImpl implements EnderecoService {
 	}
 
 	@Override
-	public EnderecoAtualizacaoDTO atualizar(Long id, EnderecoAtualizacaoDTO enderecoAtualizacaoDTO) {
+	public EnderecoDTO atualizar(Long id, EnderecoDTO enderecoDTO) {
 		Endereco enderecoSalvo = this.enderecoRepository.findOne(id);
 		if (enderecoSalvo == null) {
 			throw new EmptyResultDataAccessException(1);
 		}
-		BeanUtils.copyProperties(enderecoAtualizacaoDTO, enderecoSalvo, "id");
+		BeanUtils.copyProperties(enderecoDTO, enderecoSalvo, "id");
 		enderecoRepository.save(enderecoSalvo);
-		return enderecoMapper.domainToAtualizacaoCadastroDto(enderecoSalvo);
+		return enderecoMapper.domainToDto(enderecoSalvo);
 	}
 
 	@Override
@@ -51,7 +50,7 @@ public class EnderecoServiceImpl implements EnderecoService {
 
 	@Override
 	public void remover(Long id) {
-
+		enderecoRepository.delete(id);
 	}
 
 	@Override

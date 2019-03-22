@@ -41,7 +41,7 @@ public class Endereco {
     @NotNull
     private Boolean ativo;
 
-	@NotNull
+    @NotNull
 	@Enumerated(EnumType.STRING)
 	private SiglaUnidadeFederativa uf;
 
