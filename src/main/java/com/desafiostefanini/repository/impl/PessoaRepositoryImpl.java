@@ -53,7 +53,9 @@ public class PessoaRepositoryImpl implements PessoaRepositoryQuery {
 		if (!StringUtils.isEmpty(pessoaFilter.getCpf())) {
 			predicates.add(builder.like(
 					builder.lower(root.get("cpf")),"%" +
-							pessoaFilter.getCpf().toLowerCase() + "%"));
+							pessoaFilter.getCpf().toLowerCase()
+									.replace(".", "")
+									.replace("-", "") + "%"));
 		}
 		
 		if (pessoaFilter.getDataNascimentoDe() != null) {
