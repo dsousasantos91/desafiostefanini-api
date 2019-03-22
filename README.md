@@ -9,7 +9,7 @@ Para iniciar o projeto basta clonar o repositório para máquina e seguir o proc
 ## Pré-requisitos
 ```
 JDK 8
-IDE Spring Tools Suite ou Intellij (preferencialmente)
+IDE Spring Tools Suite, Eclipse ou Intellij
 ```
 
 ## Instalação
