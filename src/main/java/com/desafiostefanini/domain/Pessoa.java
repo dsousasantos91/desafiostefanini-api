@@ -39,6 +39,7 @@ public class Pessoa {
 
 	private Contato contato;
 
+	@NotNull
 	@JsonIgnoreProperties("pessoa")
 	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	@JoinColumn(name = "pessoa_id")
